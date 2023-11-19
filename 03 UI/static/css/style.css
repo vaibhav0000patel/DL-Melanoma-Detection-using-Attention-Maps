@@ -1,0 +1,60 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f2cc17;
+}
+.nav-wrapper {
+    background-color: #045194; /* Google Blue */
+}
+.btn, .btn-large {
+    margin-top: 20px;
+    background-color: #045194; /* Google Blue */
+}
+.btn:hover, .btn-large:hover {
+    margin-top: 20px;
+    background-color: #2277c2; /* Google Blue */
+}
+.file-drop-area {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border: 2px dashed #ddd;
+    border-radius: 3px;
+    transition: border .3s ease-in-out;
+    cursor: pointer;
+
+}
+
+.file-drop-area.hover {
+    border-color: #999;
+    cursor: pointer;
+}
+
+#preview{
+    display: block;
+    width: 400px;
+    text-align: center;
+}
+
+#uploadedImage{
+    display: block;
+    height: 300px;
+    width: 400px;
+    text-align: center;
+}
+
+#loader {
+    display: none;
+    margin-top: 10px;
+}
+th,td{
+    text-align: center;
+}
+#uwinLogo{
+    margin: 19% 11%;
+}
+
+p{
+    margin-top: 10px  !important;
+}

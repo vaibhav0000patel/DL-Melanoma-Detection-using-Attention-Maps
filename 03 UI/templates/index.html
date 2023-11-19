@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Melanoma Detection</title>
+    <!-- Import Materialize CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header>
+        <nav class="nav-wrapper">
+            <div class="container">
+                <a href="" class="brand-logo">Melanoma Detection</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="card" style="margin-top: 15px;">
+            <div class="col s12 m6">
+                <div class="card-content" style="text-align: justify;">
+                    Melanoma, a rapidly increasing tumor from abnormal skin cells, presents a concerning rise in cases and fatalities. With a 17.5% death rate globally in 2020, predictions suggest a 68% rise in deaths by 2040. Our project focuses on leveraging Deep Learning for early detection. Employing attention-based model, we aim to enhance classification accuracy from skin lesion images, with an innovative approach combining local and global features.
+                </div>
+            </div>
+        </div>
+        <div class="card" style="margin-top: 15px;">
+                <div class="col s12 m6 center">
+
+                    <div class="card-content">
+
+                    <form id="uploadForm" action="/" method="post" enctype="multipart/form-data">
+                        <div class="row">
+
+                            <div class="col s12 m2 center"></div>
+
+                            <div class="col s12 m6 center">
+
+                                <div id="drop_zone" class="file-drop-area">
+                                    <span class="file-msg">Drag and drop file here</span>
+                                    <input class="file-input" name="file" type="file" hidden>
+                                    <img class="card row grey lighten-5" id="preview" src="#" alt="Image preview..." style="display:none;"/>
+                                </div>
+                            
+                            </div>
+                            <!-- <input type="file" name="file"> -->
+                            <div class="col s12 m2 center">
+
+                                <button id="submitBtn" class="btn waves-effect waves-light center" type="submit">
+                                    Predict
+                                    <i class="material-icons right">send</i>
+                                </button>
+
+                                <div id="loader" class="preloader-wrapper small active center" style="display: none;">
+                                    <div class="spinner-layer spinner-blue-only">
+                                        <div class="circle-clipper left">
+                                            <div class="circle"></div>
+                                        </div>
+                                        <div class="gap-patch">
+                                            <div class="circle"></div>
+                                        </div>
+                                        <div class="circle-clipper right">
+                                            <div class="circle"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col s12 m2 center"></div>
+                        </div>
+
+                    </form>
+                    </div>
+                </div>
+            
+        </div>
+
+        {% if prediction %}
+        <div id="predictions_section" class="card row" style="margin: 0px; padding: 15px;">
+
+                <div class="row center"><span class="card-title ">Predictions</span></div>
+                <div class="col s12 m1"></div>
+                <div class="col s12 m5">
+                    {% if image_path %}
+                        <div class="center" style="margin-top: 15px;">
+                            <img class="card row " id="uploadedImage" src="{{ url_for('static', filename=image_path) }}" alt="Uploaded Image"/>
+                        </div>
+                        <div class="center ">{{ filename }} (with Attention Map)</div>
+                    {% endif %}
+                </div>
+                <div class="col s12 m1"></div>
+                <div class="col s12 m4">
+                    {% if prediction %}
+                        <div class="section">
+                            <canvas id="predictionChart"></canvas>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col s12 m1"></div>
+            
+        </div>
+        {% endif %}
+
+        <div class="card row" style="margin: 15px 0px; padding: 15px 0px 0px;">
+            <div class="row center">
+                <span class="card-title ">About Us</span>
+            </div>
+            <div class="row center" style="margin-bottom: 0;">
+                <span class="card-content" style="padding: 0;">
+                    <p><b>Machine Learning</b> (GENG-8900)</p>
+                    <p>Instructor: <b>Dr. Yasser Alginahi</b></p>
+                </span>
+            </div>
+            <div class="row center" style="margin-bottom: 0px;">
+                <div class="col s12 m5" id="uwinLogoDiv">
+                    <img class=" row grey lighten-5" id="uwinLogo" src="{{ url_for('static', filename='logo/uwindsor_logo.png') }}" alt="Uploaded Image" style="max-width:100%;"/>
+                </div>
+                <div class="col s12 m7">
+                    <div class="card-content center">
+                            <table class="highlight " >
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Student ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Almiqdad Elzein</td>
+                                        <td>110077753</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ifrah Andleeb</td>
+                                        <td>110137480</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vaibhav Anilkumar Patel</td>
+                                        <td>110109647</td>
+                                    </tr>
+                                    <!-- Add more rows as needed -->
+                                </tbody>
+                            </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <!-- Import Materialize JS -->
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+
+    <script>
+
+        const dropZone = document.getElementById('drop_zone');
+        const fileInput = document.querySelector('.file-input');
+        const fileMsg = document.querySelector('.file-msg');
+        const predictionsSection = document.querySelector('#predictions_section');
+
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();  // Prevent the form from submitting immediately
+
+            var submitBtn = document.getElementById('submitBtn');
+            var loader = document.getElementById('loader');
+
+            // Hide submit button and show loader
+            submitBtn.style.display = 'none';
+            loader.style.display = 'block';
+
+            // After 1 second, submit the form programmatically
+            setTimeout(function() {
+                // loader.style.display = 'none';
+                // submitBtn.style.display = 'block';
+                e.target.submit();  // Now submit the form
+            }, 2000);
+        });
+        
+
+        dropZone.addEventListener('click', function() {
+            fileInput.click();  // Triggers the file input dialog
+        });
+
+        dropZone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('hover');
+        });
+
+        dropZone.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('hover');
+        });
+
+        dropZone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('hover');
+            const files = e.dataTransfer.files;
+            fileInput.files = files;
+            showFiles(files);
+        });
+
+        fileInput.addEventListener('change', function() {
+            showFiles(this.files);
+        });
+
+        function showFiles(files) {
+            if (files.length === 0) return;
+            const file = files[0];
+            fileMsg.textContent = "";
+            
+            // Preview
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onloadend = function() {
+                    const preview = document.getElementById('preview');
+                    preview.src = reader.result;
+                    preview.style.display = 'block';
+                };
+            }
+
+            predictionsSection.style.display = "none";
+        }
+
+
+        var ctx = document.getElementById('predictionChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Melanoma ({{ prediction[0] }}%)', 'Nevus ({{ prediction[1] }}%)', 'Seborrheic Keratosis ({{ prediction[2] }}%)'],
+                datasets: [{
+                    label: 'Probability',
+                    data: {{ prediction|tojson }},
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            // options: {
+                // scales: {
+                //     y: {
+                //         beginAtZero: true,
+                //         max: 1
+                //     }
+                // }
+            // }
+           
+        });
+    </script>
+
+</body>
+</html>

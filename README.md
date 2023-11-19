@@ -1,8 +1,23 @@
 # DL-Melanoma-Detection-using-Attention-Maps
 Deep Learning based Melanoma Detection using Attention Maps
 
+# Data Preprocessing and Training the classifier
 
+To set up and run the experiment, follow these instructions:
 
+1. Compile all code cells, except for the final one.
+
+2. In the last code cell, define the following parameters:
+
+   - `data_dir`: Specify the path to your dataset.
+
+   - `CNN`: Choose the neural network model for global and local feature extraction. Options include "8-layer", "ResNet18", and "ResNet50".
+
+   - `ftr_size`: Determine the size of the local and global features to be extracted from the images.
+
+   - `weight_sharing`: Set this to `True` if the same model weights are to be used across local features, global features, and the attention map extractor. Use `False` to employ separate models of the specified "CNN" type for each task.
+
+   - `out_file`: Name the `.txt` file where the results of the experiment will be recorded. 
 
 
 # UI Application (How to run)

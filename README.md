@@ -5,11 +5,11 @@ Deep Learning based Melanoma Detection using Attention Maps
 
 To set up and run the experiment, follow these instructions:
 
-1. Initially, obtain the dataset, necessary for the experiment.
+1. Initially, obtain the dataset using `skin_lesion_imgs_augmentation.ipynb`, necessary for the experiment.
 
-2. Compile all code cells, except for the final one.
+2. Compile all code cells in `Melanoma_detection_main_code.ipynb`, except for the final one.
 
-2. In the last code cell, define the following parameters:
+3. In the last code cell, define the following parameters:
 
    - `data_dir`: Specify the path to your dataset.
 
@@ -21,6 +21,7 @@ To set up and run the experiment, follow these instructions:
 
    - `out_file`: Name the `.txt` file where the results of the experiment will be recorded. 
 
+4. Run the last cell for training. Then, use your trained model in the UI Application.
 
 # UI Application (How to run)
 

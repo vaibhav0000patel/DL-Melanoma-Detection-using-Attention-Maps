@@ -1,6 +1,11 @@
 import torch
+import numpy as np
 import torch.nn as nn
+from PIL import Image
 import torch.nn.functional as F
+import torchvision.models as models
+from torchvision.utils import save_image
+import torchvision.transforms as transforms
 from torchvision.utils import draw_bounding_boxes
 
 class AttentionNetwork(torch.nn.Module):
@@ -71,3 +76,66 @@ class AttentionNetwork(torch.nn.Module):
         probs = self.aggregate_net(ftr_vec_final) #
 
         return probs, img_with_rect
+
+class Model:
+    
+    # Initialize the model object from the given model path
+    def __init__(self,model_path):
+
+        # Ensure you're using the right device
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+        # Load the trained model (replace with your model's path)
+
+        ftr_size = 512
+
+        CNN_model1 = models.resnet50(pretrained=True)
+        fc_in_ftrs = CNN_model1.fc.in_features
+        CNN_model1.fc = nn.Linear(fc_in_ftrs, ftr_size)
+
+        CNN_model2 = models.resnet50(pretrained=True)
+        CNN_model2.fc = nn.Linear(fc_in_ftrs, ftr_size)
+
+        CNN_model3 = models.resnet50(pretrained=True)
+        CNN_model3.fc = nn.Linear(fc_in_ftrs, ftr_size)
+
+        attention_net = CNN_model1
+        attention_ftr_extractor = CNN_model2
+        global_net = CNN_model3
+
+        self.model = AttentionNetwork(AttentionNet=attention_net,
+                                AttentionFtrExtractor=attention_ftr_extractor,
+                                GlobalNet=global_net,
+                                num_classes=3,
+                                size=224,
+                                ftr_size=ftr_size)
+
+        self.model.load_state_dict(torch.load(model_path)['state_dict'])
+
+        self.model.eval()
+
+        self.transform = transforms.Compose([
+            transforms.Resize((224, 224)),
+            transforms.ToTensor(),
+        ])
+
+    # Perform predictions using the loaded model
+    def predict(self, file_path):
+
+        # Select the Uploaded Image
+        image = Image.open(file_path)
+ 
+        image = self.transform(image).unsqueeze(0).to(self.device)
+
+        prediction = [0,0,0]
+
+        with torch.no_grad():
+            outputs, img_with_rect = self.model(image)
+            save_image(img_with_rect,file_path)
+            probs = torch.nn.functional.softmax(outputs, dim=1)
+            prediction = probs.cpu().numpy().tolist()[0]
+        
+        # Capture and return the predictions
+        prediction = list(map(lambda x:round(x,4)*100,prediction))
+
+        return prediction

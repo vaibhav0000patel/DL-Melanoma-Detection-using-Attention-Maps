@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Link to external CSS file -->
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
 </head>
 
@@ -18,46 +19,63 @@
     <header>
         <nav class="nav-wrapper">
             <div class="container">
+                <!-- Brand Logo -->
                 <a href="" class="brand-logo">Melanoma Detection</a>
             </div>
         </nav>
     </header>
 
+    <!-- Main Container -->
     <div class="container">
+        <!-- Information Card -->
         <div class="card" style="margin-top: 15px;">
             <div class="col s12 m6">
+                <!-- Card Content -->
                 <div class="card-content" style="text-align: justify;">
+                    <!-- Description of the project -->
                     Melanoma, a rapidly increasing tumor from abnormal skin cells, presents a concerning rise in cases and fatalities. With a 17.5% death rate globally in 2020, predictions suggest a 68% rise in deaths by 2040. Our project focuses on leveraging Deep Learning for early detection. Employing attention-based model, we aim to enhance classification accuracy from skin lesion images, with an innovative approach combining local and global features.
                 </div>
             </div>
         </div>
+
+        <!-- File Upload Card -->
         <div class="card" style="margin-top: 15px;">
-                <div class="col s12 m6 center">
+            <div class="col s12 m6 center">
 
-                    <div class="card-content">
+                <!-- Card Content -->
+                <div class="card-content">
 
+                    <!-- Form for uploading images -->
                     <form id="uploadForm" action="/" method="post" enctype="multipart/form-data">
                         <div class="row">
 
+                            <!-- Empty Column for alignment -->
                             <div class="col s12 m2 center"></div>
 
+                            <!-- Upload Area -->
                             <div class="col s12 m6 center">
 
+                                <!-- File Drop Area -->
                                 <div id="drop_zone" class="file-drop-area">
                                     <span class="file-msg">Drag and drop file here</span>
                                     <input class="file-input" name="file" type="file" hidden>
+                                    <!-- Image Preview -->
                                     <img class="card row grey lighten-5" id="preview" src="#" alt="Image preview..." style="display:none;"/>
                                 </div>
                             
                             </div>
-                            <!-- <input type="file" name="file"> -->
+                            
+                            <!-- Submit Button -->
                             <div class="col s12 m2 center">
 
+                                <!-- Prediction Button -->
                                 <button id="submitBtn" class="btn waves-effect waves-light center" type="submit">
                                     Predict
+                                    <!-- Icon -->
                                     <i class="material-icons right">send</i>
                                 </button>
 
+                                <!-- Loader animation -->
                                 <div id="loader" class="preloader-wrapper small active center" style="display: none;">
                                     <div class="spinner-layer spinner-blue-only">
                                         <div class="circle-clipper left">
@@ -74,65 +92,85 @@
 
                             </div>
 
+                            <!-- Empty Column for alignment -->
                             <div class="col s12 m2 center"></div>
                         </div>
 
                     </form>
-                    </div>
                 </div>
+            </div>
             
         </div>
 
-        {% if prediction %}
-        <div id="predictions_section" class="card row" style="margin: 0px; padding: 15px;">
+       <!-- Conditional rendering block: Displays the prediction section if a prediction exists -->
+       {% if prediction %}
+       <div id="predictions_section" class="card row" style="margin: 0px; padding: 15px;">
 
-                <div class="row center"><span class="card-title ">Predictions</span></div>
-                <div class="col s12 m1"></div>
-                <div class="col s12 m5">
-                    {% if image_path %}
-                        <div class="center" style="margin-top: 15px;">
-                            <img class="card row " id="uploadedImage" src="{{ url_for('static', filename=image_path) }}" alt="Uploaded Image"/>
-                        </div>
-                        <div class="center ">{{ filename }} (with Attention Map)</div>
-                    {% endif %}
-                </div>
-                <div class="col s12 m1"></div>
-                <div class="col s12 m4">
-                    {% if prediction %}
-                        <div class="section">
-                            <canvas id="predictionChart"></canvas>
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="col s12 m1"></div>
-            
-        </div>
-        {% endif %}
+               <!-- Title for the Predictions section -->
+               <div class="row center"><span class="card-title ">Predictions</span></div>
+			               <div class="col s12 m1"></div>
+               <!-- Image display section -->
+               <div class="col s12 m5">
+                   {% if image_path %}
+                       <div class="center" style="margin-top: 15px;">
+                           <!-- Displaying the uploaded image -->
+                           <img class="card row " id="uploadedImage" src="{{ url_for('static', filename=image_path) }}" alt="Uploaded Image"/>
+                       </div>
+                       <!-- Filename display with attention map -->
+                       <div class="center ">{{ filename }} (with Attention Map)</div>
+                   {% endif %}
+               </div>
 
+               <!-- Placeholder for future content -->
+               <div class="col s12 m1"></div>
+
+               <!-- Chart display section -->
+               <div class="col s12 m4">
+                   {% if prediction %}
+                       <div class="section">
+                           <!-- Canvas for displaying the prediction chart -->
+                           <canvas id="predictionChart"></canvas>
+                       </div>
+                   {% endif %}
+               </div>
+
+               <!-- Placeholder for future content -->
+               <div class="col s12 m1"></div>
+           
+       </div>
+       {% endif %}
+
+        <!-- About Us section -->
         <div class="card row" style="margin: 15px 0px; padding: 15px 0px 0px;">
             <div class="row center">
+                <!-- Title for the About Us section -->
                 <span class="card-title ">About Us</span>
             </div>
             <div class="row center" style="margin-bottom: 0;">
+                <!-- Content of the About Us section -->
                 <span class="card-content" style="padding: 0;">
                     <p><b>Machine Learning</b> (GENG-8900)</p>
                     <p>Instructor: <b>Dr. Yasser Alginahi</b></p>
                 </span>
             </div>
             <div class="row center" style="margin-bottom: 0px;">
+                <!-- University logo display section -->
                 <div class="col s12 m5" id="uwinLogoDiv">
                     <img class=" row grey lighten-5" id="uwinLogo" src="{{ url_for('static', filename='logo/uwindsor_logo.png') }}" alt="Uploaded Image" style="max-width:100%;"/>
                 </div>
+                <!-- Student information display section -->
                 <div class="col s12 m7">
                     <div class="card-content center">
                             <table class="highlight " >
                                 <thead>
                                     <tr>
+                                        <!-- Table headers -->
                                         <th>Name</th>
                                         <th>Student ID</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <!-- Table rows with student information -->
                                     <tr>
                                         <td>Almiqdad Elzein</td>
                                         <td>110077753</td>
@@ -145,7 +183,7 @@
                                         <td>Vaibhav Anilkumar Patel</td>
                                         <td>110109647</td>
                                     </tr>
-                                    <!-- Add more rows as needed -->
+                                    <!-- Placeholder for more rows -->
                                 </tbody>
                             </table>
                     </div>
@@ -254,15 +292,7 @@
                     ],
                     borderWidth: 1
                 }]
-            },
-            // options: {
-                // scales: {
-                //     y: {
-                //         beginAtZero: true,
-                //         max: 1
-                //     }
-                // }
-            // }
+            }
            
         });
     </script>

@@ -1,11 +1,13 @@
 # DL-Melanoma-Detection-using-Attention-Maps
 Deep Learning based Melanoma Detection using Attention Maps
 
-# Data Preprocessing and Training the classifier
+# Training the classifier
 
 To set up and run the experiment, follow these instructions:
 
-1. Compile all code cells, except for the final one.
+1. Initially, obtain the dataset, necessary for the experiment.
+
+2. Compile all code cells, except for the final one.
 
 2. In the last code cell, define the following parameters:
 

@@ -21,12 +21,9 @@ To set up and run the experiment, follow these instructions:
 
    - `out_file`: Name the `.txt` file where the results of the experiment will be recorded. 
 
-4. Run the last cell for training. Then, use your trained model in the UI Application.
+4. Run the last cell for training. The trained model will be saved in your Google Drive as "melanoma_detection.pt". Then, use your trained model in the UI Application, as shown below.
 
 # UI Application (How to run)
-
-## Introduction
-This README provides instructions on how to set up and run the Flask application. Flask is a lightweight WSGI web application framework in Python, ideal for building small to medium-sized web apps.
 
 ## Prerequisites
 Before you start, ensure you have the following installed:

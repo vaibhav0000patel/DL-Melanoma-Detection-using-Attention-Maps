@@ -9,6 +9,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 STATIC_FOLDER = 'static/'
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+# Model to use
 MODEL_PATH = "static/models/model_epoch_11.pt"
 
 # Flask configurations

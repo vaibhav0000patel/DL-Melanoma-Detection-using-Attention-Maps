@@ -57,6 +57,10 @@ Install all required packages:
 pip install -r requirements.txt
 ```
 
+### Use your trained model
+1. Move your model to `03UIApplication\static\models`
+2. Set the name of your model in `app.py` => `MODEL_PATH = "static/models/<your-model>.pt"`
+
 ## Running the Application
 To run the Flask application, use the following command:
 ```bash

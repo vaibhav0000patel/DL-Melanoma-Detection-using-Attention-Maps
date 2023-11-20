@@ -7,7 +7,7 @@ To set up and run the experiment, follow these instructions:
 
 1. Initially, obtain the dataset using `01DataPreprocessing/skin_lesion_imgs_augmentation.ipynb`, necessary for the experiment.
 
-2. Compile all code cells in `Melanoma_detection_main_code.ipynb`, except for the final one.
+2. Compile all code cells in `02MelanomaClassification/Melanoma_detection_main_code.ipynb`, except for the final one.
 
 3. In the last code cell, define the following parameters:
 

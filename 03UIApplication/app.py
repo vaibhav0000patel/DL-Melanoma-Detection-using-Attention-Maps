@@ -11,7 +11,7 @@ UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 # Model to use
-MODEL_PATH = "static/models/model_epoch_11.pt"
+MODEL_PATH = "static/models/model_epoch_43.pt"
 
 # Flask configurations
 app = Flask(__name__)

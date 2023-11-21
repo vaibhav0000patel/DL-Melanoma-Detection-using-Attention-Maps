@@ -110,7 +110,7 @@ class Model:
                                 size=224,
                                 ftr_size=ftr_size)
 
-        self.model.load_state_dict(torch.load(model_path)['state_dict'])
+        self.model.load_state_dict(torch.load(model_path,map_location=torch.device('cpu'))['state_dict'])
 
         self.model.eval()
 
